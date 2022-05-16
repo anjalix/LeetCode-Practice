@@ -13,6 +13,11 @@
  *     }
  * }
  */
+/*
+
+Solution 1:
+@author: Anjali
+
 class Solution {
     public TreeNode invertTree(TreeNode root) {
         if(root == null) return root;
@@ -29,6 +34,26 @@ class Solution {
             if(top.right != null)
                 q.add(top.right);  
         }
+        return root;
+    }
+}
+*/
+
+
+/*
+Solution 2:
+@author: Anjali
+*/
+
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+    if(root == null || (root.left==null && root.right==null))
+        return root;
+
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+        root.left = right;
+        root.right = left;
         return root;
     }
 }
