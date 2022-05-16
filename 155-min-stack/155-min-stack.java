@@ -1,31 +1,39 @@
 class MinStack {
-    int[] stack;
-    int pointer;
-    int[] min;
+
+    private class Node {
+        int val;
+        int min;
+        Node next;   
+
+        private Node(int val, int min, Node next) {
+            this.val = val;
+            this.min = min;
+            this.next = next;
+        }
+    }
+    
+    private Node stack;
     
     public MinStack() {
-        stack = new int[30000];
-        min = new int[30000];
-        pointer = 0;
     }
     
     public void push(int val) {
-        stack[pointer++] = val;
-        min[pointer] = (pointer==1)?val:Math.min(min[pointer-1], val);
+        if(stack == null)
+            stack = new Node(val,val,null);
+        else
+            stack = new Node(val,Math.min(val,getMin()),stack);        
     }
     
     public void pop() {
-        min[pointer] = min[pointer-1];
-        pointer--;
-        
+        stack = stack.next;
     }
     
     public int top() {
-        return stack[pointer-1];
+        return stack.val;
     }
     
     public int getMin() {
-        return min[pointer];
+        return stack.min;
     }
 }
 
