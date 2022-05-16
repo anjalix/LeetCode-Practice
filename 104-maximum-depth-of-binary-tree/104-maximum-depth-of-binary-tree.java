@@ -13,6 +13,12 @@
  *     }
  * }
  */
+
+/*
+Solution 1: Queue Based Implementation
+@author: Anjali
+
+
 class Solution {
     public int maxDepth(TreeNode root) {
         Queue<TreeNode> q = new LinkedList<>();
@@ -39,5 +45,29 @@ class Solution {
                 q.add(pop.right);
         }
         return cnt;
+    }
+}
+
+*/
+
+/*
+Solution 2:
+
+*/
+
+class Solution {
+ 
+    public int maxDepth(TreeNode root) {
+        if(root == null)
+            return 0;
+        if(root.left == null && root.right == null)
+            return 1;
+        if(root.left == null)
+            return 1 + maxDepth(root.right);
+        if(root.right == null)
+            return 1 + maxDepth(root.left);
+        int left = maxDepth(root.right);
+        int right = maxDepth(root.left);
+        return Math.max(left,right)+1;    
     }
 }
