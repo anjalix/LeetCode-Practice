@@ -28,19 +28,12 @@ class Solution {
             merge = merge.next;
         }
         
-        while(list1!=null)
-        {
-            merge.next = new ListNode(list1.val);
-            merge = merge.next;
-            list1 = list1.next;
-        } 
+        if(list1!=null)
+            merge.next = list1;
         
-        while(list2!=null)
-        {
-            merge.next = new ListNode(list2.val);
-            merge = merge.next;
-            list2 = list2.next;
-        }
+        if(list2!=null)
+            merge.next = list2;
+        
         return head.next;
     }
 }
