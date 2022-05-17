@@ -1,3 +1,34 @@
+/* Solution 2:
+Priority Queue Based Implementation
+*/
+
+class KthLargest {
+
+    private PriorityQueue<Integer> pq;
+    private int k;
+    
+    public KthLargest(int k, int[] nums) {
+        pq = new PriorityQueue<>();
+        this.k = k;
+        for(int n : nums)
+            pq.offer(n);
+        while(pq.size()>k)
+            pq.poll();        
+    }
+    
+    public int add(int val) {
+        pq.offer(val);
+        while(pq.size()>k)
+            pq.poll();
+        return pq.peek();
+    }
+}
+/*
+Solution 1:
+Array Based Approach
+@aunthor: Anjali
+
+
 class KthLargest {
    
     int n,k;
@@ -31,6 +62,9 @@ class KthLargest {
             return ans[n-k];
     }
 }
+
+*/
+
 
 /**
  * Your KthLargest object will be instantiated and called as such:
