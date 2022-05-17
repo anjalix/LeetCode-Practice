@@ -1,3 +1,31 @@
+/*
+Solution 2:
+@author : Anjali
+*/
+
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        Set visited = new HashSet();
+        for(int i = 0;i<9;i++) {
+            for(int j =0;j<9;j++) {
+                if(board[i][j]!='.') {
+                    if((!visited.add(board[i][j] + "in row" + i)) ||
+                    (!visited.add(board[i][j] + "in column" + j)) ||
+                    (!visited.add(board[i][j] + "in grid" + i/3 + j/3)))
+                        return false;
+                }
+            }
+        }    
+        return true;
+    }
+}
+
+
+
+/*
+Solution 1:
+@author: Anjali
+
 class Solution {
     public boolean isValidSudoku(char[][] board) {
         int x,y;
@@ -37,3 +65,5 @@ class Solution {
         return true;
     }
 }
+*/
+
