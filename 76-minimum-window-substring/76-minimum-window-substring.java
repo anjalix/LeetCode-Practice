@@ -1,66 +1,58 @@
 class Solution {
     public String minWindow(String s, String t) {
-
-        if (s.length() == 0 || t.length() == 0) {
+        int slen = s.length();
+        int tlen = t.length();
+        String ans = "";
+        
+        if(tlen > slen)
             return "";
+        
+        int left = 0;
+        
+        HashMap<Character, Integer> hmap = new HashMap<Character, Integer>();
+        
+        for(int i = 0;i<tlen;i++) {
+            hmap.put(t.charAt(i), hmap.getOrDefault(t.charAt(i),0)+1);
         }
-
-        Map<Character, Integer> dictT = new HashMap<Character, Integer>();
-
-        for (int i = 0; i < t.length(); i++) {
-            int count = dictT.getOrDefault(t.charAt(i), 0);
-            dictT.put(t.charAt(i), count + 1);
-        }
-
-        int required = dictT.size();
-
-        // Filter all the characters from s into a new list along with their index.
-        // The filtering criteria is that the character should be present in t.
-        List<Pair<Integer, Character>> filteredS = new ArrayList<Pair<Integer, Character>>();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (dictT.containsKey(c)) {
-                filteredS.add(new Pair<Integer, Character>(i, c));
-            }
-        }
-
-        int l = 0, r = 0, formed = 0;
-        Map<Character, Integer> windowCounts = new HashMap<Character, Integer>();  
-        int[] ans = {-1, 0, 0};
-
-        // Look for the characters only in the filtered list instead of entire s.
-        // This helps to reduce our search.
-        // Hence, we follow the sliding window approach on as small list.
-        while (r < filteredS.size()) {
-            char c = filteredS.get(r).getValue();
-            int count = windowCounts.getOrDefault(c, 0);
-            windowCounts.put(c, count + 1);
-
-            if (dictT.containsKey(c) && windowCounts.get(c).intValue() == dictT.get(c).intValue()) {
-                formed++;
-            }
-
-            // Try and contract the window till the point where it ceases to be 'desirable'.
-            while (l <= r && formed == required) {
-                c = filteredS.get(l).getValue();
-
-                // Save the smallest window until now.
-                int end = filteredS.get(r).getKey();
-                int start = filteredS.get(l).getKey();
-                if (ans[0] == -1 || end - start + 1 < ans[0]) {
-                    ans[0] = end - start + 1;
-                    ans[1] = start;
-                    ans[2] = end;
+        int count = hmap.size();
+        
+        while(left<slen && !hmap.containsKey(s.charAt(left)))
+            left++;
+        
+        int right = left;
+        int cnt = 0;
+        int min = Integer.MAX_VALUE;
+        
+        while(left<=right && right<slen) {
+            if(hmap.containsKey(s.charAt(right))) {
+                cnt = hmap.get(s.charAt(right));
+                cnt--;
+                hmap.put(s.charAt(right), cnt);
+                if(cnt == 0)
+                    count--;
+                if(count == 0 && min > right-left+1) {
+                    ans = s.substring(left,right+1);
+                    min = right-left+1;
                 }
-
-                windowCounts.put(c, windowCounts.get(c) - 1);
-                if (dictT.containsKey(c) && windowCounts.get(c).intValue() < dictT.get(c).intValue()) {
-                    formed--;
+                while(count == 0) {
+                    if(hmap.containsKey(s.charAt(left))) {
+                        cnt = hmap.get(s.charAt(left));
+                        cnt++;
+                        hmap.put(s.charAt(left), cnt);
+                        left++;
+                        if(cnt > 0)
+                            count++;
+                    }
+                    else
+                        left++;
+                    if(count == 0 && min > right-left+1) {
+                        ans = s.substring(left,right+1);  
+                        min = right-left+1;
+                    }
                 }
-                l++;
             }
-            r++;   
-        }
-        return ans[0] == -1 ? "" : s.substring(ans[1], ans[2] + 1);
+            right++;                   
+        }            
+        return ans;        
     }
 }
