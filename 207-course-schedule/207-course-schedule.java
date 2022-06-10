@@ -1,5 +1,21 @@
 class Solution {
     
+    class Graph{
+    private static int v;
+    private static List<List<Integer>> adj;
+    
+    public Graph(int v) {
+        this.v = v;
+        adj = new ArrayList<List<Integer>>(v);
+        for(int i = 0;i<v;i++)
+            adj.add(new LinkedList<>());
+    }
+    
+    public static void addLink(int src, int dest) {
+        adj.get(src).add(dest);
+    }
+    }
+    
     Graph graph;
     
     public boolean canFinish(int numCourses, int[][] prerequisites) {
@@ -36,20 +52,4 @@ class Solution {
         return false;
     }
     
-}
-
-class Graph{
-    public static int v;
-    public static List<List<Integer>> adj;
-    
-    public Graph(int v) {
-        this.v = v;
-        adj = new ArrayList<List<Integer>>(v);
-        for(int i = 0;i<v;i++)
-            adj.add(new LinkedList<>());
-    }
-    
-    public static void addLink(int src, int dest) {
-        adj.get(src).add(dest);
-    }
 }
