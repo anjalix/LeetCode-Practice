@@ -9,6 +9,10 @@ class Solution {
     private int col;
     private List<String> ans;
     
+    public Solution() {
+        root = new Trie();
+    }
+    
     class Trie {
         Trie[] link = new Trie[26];
         boolean end_here = false;
@@ -79,7 +83,6 @@ class Solution {
         row  = board.length;
         col = board[0].length;
         
-        root = new Trie();
         for(String word : words) {
             insertWord(word);
         }
