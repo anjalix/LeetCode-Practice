@@ -15,7 +15,7 @@ class Solution {
     
     class Trie {
         Trie[] link = new Trie[26];
-        boolean end_here = false;
+        String word;
         
         public boolean containsLink(char ch) {
             return (link[ch-'a'] != null);
@@ -27,16 +27,7 @@ class Solution {
         
         public Trie getLink(char ch) {
             return link[ch-'a'];
-        }
-        
-        public void setEnd(){
-            end_here = true;
-        }
-        
-        public boolean containsWord(){
-            return (end_here == true);
-        }
-                
+        }                
     }
     
     public void insertWord(String word) {
@@ -48,13 +39,13 @@ class Solution {
                 node.setLink(c, new Trie());
             node = node.getLink(c);
         }
-        node.setEnd();
+        node.word = word;
     }
     
     public void dfs(char[][] board, int i , int j, Trie node, String word) {
-        if(node.containsWord()) {
-            if(!ans.contains(word))
-                ans.add(word);
+        if(node.word!=null) {
+                ans.add(node.word);
+                node.word = null;
          if(i<0 || j<0 || i>= row || j>=col || board[i][j]=='*' || !node.containsLink(board[i][j]))
              return;             
         }
