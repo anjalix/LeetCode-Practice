@@ -51,29 +51,27 @@ class Solution {
         node.setEnd();
     }
     
-    public boolean dfs(char[][] board, int i , int j, Trie node, String word) {
+    public void dfs(char[][] board, int i , int j, Trie node, String word) {
         if(node.containsWord()) {
             if(!ans.contains(word))
                 ans.add(word);
-         if(i>=0 && j>=0 && i<row && j<col && board[i][j]!='*' && !node.containsLink(board[i][j]))
-             return true;             
+         if(i<0 || j<0 || i>= row || j>=col || board[i][j]=='*' || !node.containsLink(board[i][j]))
+             return;             
         }
         
         if(i<0 || j<0 || i>= row || j>=col || board[i][j]=='*' || !node.containsLink(board[i][j]))
-            return false;
-
+            return;
         
         node = node.getLink(board[i][j]);
         char temp = board[i][j];
         board[i][j] = '*';
         word = word + temp;
-        boolean found = dfs(board, i+1, j, node, word);
-            found = dfs(board, i-1, j, node, word) || found;
-            found = dfs(board, i, j-1, node, word) || found;
-            found = dfs(board, i, j+1, node, word) || found;
-        board[i][j] = temp;
-        
-        return found;
+        dfs(board, i+1, j, node, word);
+        dfs(board, i-1, j, node, word);
+        dfs(board, i, j-1, node, word);
+        dfs(board, i, j+1, node, word);
+        board[i][j] = temp;        
+        return;
     }
     
     
