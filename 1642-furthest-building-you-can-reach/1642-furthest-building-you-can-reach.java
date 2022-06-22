@@ -1,15 +1,17 @@
 class Solution {
- public int furthestBuilding(int[] A, int bricks, int ladders) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        for (int i = 0; i < A.length - 1; i++) {
-            int d = A[i + 1] - A[i];
-            if (d > 0)
-                pq.add(d);
-            if (pq.size() > ladders)
-                bricks -= pq.poll();
-            if (bricks < 0)
-                return i;
+    public int furthestBuilding(int[] heights, int bricks, int ladders) {
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+        int diff;
+        for(int i = 1; i<heights.length; i++) {
+            diff = heights[i] - heights[i-1];
+            if(diff > 0)
+                pq.add(diff);
+            if(pq.size() > ladders) {
+                bricks = bricks - pq.remove();
+            }
+            if(bricks < 0)
+                return i-1;
         }
-        return A.length - 1;
+        return heights.length-1;
     }
 }
