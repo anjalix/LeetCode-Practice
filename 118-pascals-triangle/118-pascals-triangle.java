@@ -9,7 +9,7 @@ class Solution {
             return ans;
         int size,sum;
         for(int i = 1; i<numRows; i++) {
-            l2 = ans.get(i-1);
+            l2 = l1;
             size = l2.size();
             l1 = new ArrayList<Integer>();
             l1.add(1);
