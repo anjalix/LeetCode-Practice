@@ -13,13 +13,19 @@ public class Solution {
     public boolean hasCycle(ListNode head) {
         ListNode slowPtr = head;
         ListNode fastPtr = head;
-        while(slowPtr!= null && fastPtr!=null && fastPtr.next!=null)
-        {
-            slowPtr = slowPtr.next;
-            fastPtr = fastPtr.next.next;
+        
+        while(true) {
+            if(slowPtr != null)
+                slowPtr = slowPtr.next;
+            if(fastPtr != null)
+                fastPtr = fastPtr.next;
+            if(fastPtr == null)
+                return false;
+            fastPtr = fastPtr.next;
+            if(slowPtr!=null && fastPtr == null)
+                return false;            
             if(slowPtr == fastPtr)
                 return true;
         }
-        return false;
     }
 }
