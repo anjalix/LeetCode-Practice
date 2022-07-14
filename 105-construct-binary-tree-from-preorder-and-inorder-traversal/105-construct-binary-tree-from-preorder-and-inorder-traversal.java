@@ -14,23 +14,35 @@
  * }
  */
 class Solution {
-    public TreeNode buildTree(int[] preorder, int pre_left, int pre_right, int in_left, int in_right) {        
-        if(pre_left > pre_right || in_left > in_right)
+    
+    HashMap<Integer, Integer> inorderHmap;
+    
+    public TreeNode buildTree(int[] preorder, int[] inorder, int p_start, int p_end, int i_start, int i_end) {
+        
+        if(p_start > p_end || i_start > i_end || i_end < 0 || p_end < 0 || p_start >= preorder.length || i_start >= inorder.length)
             return null;
-        if(pre_left == pre_right)
-           return new TreeNode(preorder[pre_left]);
-        int pos = inorderMap.get(preorder[pre_left]);
-        TreeNode root = new TreeNode(preorder[pre_left]);
-        root.left = buildTree(preorder, pre_left+1 , pre_left + pos-in_left , in_left , pos-1 );
-        root.right = buildTree(preorder, pre_left + pos-in_left+1, pre_right, pos+1 , in_right);
+        
+        TreeNode root = new TreeNode(preorder[p_start]);
+                
+        if(p_start == p_end)
+            return root;
+
+        int index = inorderHmap.get(preorder[p_start]);
+        root.left  = buildTree(preorder, inorder, p_start+1, p_start+index-i_start , i_start, index-1);
+        root.right = buildTree(preorder, inorder, p_start+index-i_start+1, p_end, index+1, i_end);
         return root;    
     }
     
-    HashMap<Integer, Integer> inorderMap = new HashMap<Integer, Integer>();
-    
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        for(int i = 0; i<inorder.length; i++)
-            inorderMap.put(inorder[i], i);
-        return buildTree(preorder,0,preorder.length-1,0,inorder.length-1);
+        int pl = preorder.length;
+        int il = inorder.length;
+        if(pl == 1)
+            return new TreeNode(preorder[0]);
+        
+        inorderHmap = new HashMap<Integer, Integer>();
+        for(int i = 0; i<il; i++) {
+            inorderHmap.put(inorder[i], i);
+        }
+        return buildTree(preorder, inorder, 0, pl, 0, il);    
     }
 }
