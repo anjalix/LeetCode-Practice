@@ -10,38 +10,18 @@
  * }
  */
 public class Solution {
+    
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-     List<ListNode> storage = new ArrayList<ListNode>();
-        ListNode a = headA;
-        ListNode b = headB;
-        while(a!= null && b!=null){
-            if(!storage.contains(a))
-                storage.add(a);
-            else
-                return a;
-            if(!storage.contains(b))
-                storage.add(b);
-            else
-                return b;
-            a = a.next;
-            b = b.next;
+       List<ListNode> list = new ArrayList<ListNode>();
+        while(headA!=null) {
+            list.add(headA);
+            headA = headA.next;
         }
-        
-        while(a!= null){
-            if(!storage.contains(a))
-                storage.add(a);
-            else
-                return a;
-            a = a.next;
-        }
-        
-        while(b!= null){
-            if(!storage.contains(b))
-                storage.add(b);
-            else
-                return b;
-            b = b.next;
-        }
-       return null; 
+        while(headB!=null) {
+            if(list.contains(headB))
+                return headB;
+            headB = headB.next;
+        }        
+        return null;
     }
 }
