@@ -14,18 +14,12 @@ public class Solution {
         ListNode slowPtr = head;
         ListNode fastPtr = head;
         
-        while(true) {
-            if(slowPtr != null)
-                slowPtr = slowPtr.next;
-            if(fastPtr != null)
-                fastPtr = fastPtr.next;
-            if(fastPtr == null)
-                return false;
-            fastPtr = fastPtr.next;
-            if(slowPtr!=null && fastPtr == null)
-                return false;            
+        while(slowPtr!= null && fastPtr!=null && fastPtr.next!=null) {
+            slowPtr = slowPtr.next;
+            fastPtr = fastPtr.next.next;
             if(slowPtr == fastPtr)
                 return true;
         }
+        return false;
     }
 }
