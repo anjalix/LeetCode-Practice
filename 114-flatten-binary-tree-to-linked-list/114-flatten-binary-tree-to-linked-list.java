@@ -13,6 +13,33 @@
  *     }
  * }
  */
+/* Solution 2: Non-Recursion
+*/
+class Solution {
+    public void flatten(TreeNode root) {
+        TreeNode node = root;
+        while(node!= null) {
+            TreeNode right = node.right;
+            TreeNode left = node.left;
+            if(left!= null) {
+                TreeNode temp = left;
+                while(temp.right!= null)
+                    temp = temp.right;            
+                temp.right = right;
+                node.right = left;
+                node.left = null;
+            }            
+            node = node.right;
+        }
+    }
+    
+}
+      
+
+/*
+Solution 1 :
+Recursion
+
 class Solution {
     
     TreeNode prev = null;
@@ -28,3 +55,4 @@ class Solution {
         prev = root;
     }
 }
+*/
