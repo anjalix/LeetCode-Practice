@@ -1,4 +1,19 @@
 class Solution {
+    public int prefixCount(String[] words, String pref) {
+        int prefLength = pref.length();
+        int cnt = 0;
+        for(String word : words) {            
+            int wordLength = word.length();
+            if(wordLength >= prefLength && word.substring(0,prefLength).equals(pref))
+             cnt++;
+        }
+        return cnt;
+    }
+}
+
+
+/*
+class Solution {
     
     //Trie Based Approach
     
@@ -95,3 +110,5 @@ class Solution {
         return trie.countsStartsWith(pref);
     }
 }
+
+*/
